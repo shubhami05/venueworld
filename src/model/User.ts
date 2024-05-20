@@ -42,18 +42,6 @@ export const UserSchema: Schema<User> = new Schema({
         type: String,
         required: [true, "Password is required"]
     },
-    isVerified: {
-        type: Boolean,
-        required: true
-    },
-    verifyCode: {
-        type: String,
-        required: [true, "Verify code is required"]
-    },
-    verifyCodeExpiry: {
-        type: Date,
-        required: [true, "Verify code expiry is require"]
-    },
     reviews: [ReviewSchema],
     venues: [VenueSchema],
     bookings: [BookingSchema],
