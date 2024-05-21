@@ -20,7 +20,7 @@ export async function POST(request: NextRequest) {
                 })
         }
         const existingUserByMobile = await UserModel.findOne({ mobile })
-        if (existingUserByEmail) {
+        if (existingUserByMobile) {
             return Response.json(
                 {
                     success: false,
@@ -60,7 +60,7 @@ export async function POST(request: NextRequest) {
         return Response.json(
             {
                 success: false,
-                message: "Something went wrong!"
+                message: error.message
             },
             {
                 status: 500
