@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import "../globals.css";
 import Navbar from "@/components/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
     children,
@@ -17,11 +18,12 @@ export default function RootLayout({
         return null;
     }
     return (
-        <html lang="en">
-            <body>
+      
+            <>
                 <Navbar />
                 {children}
-            </body>
-        </html>
+                <Toaster/>
+            </>
+    
     );
 }

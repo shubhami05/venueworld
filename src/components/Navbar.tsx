@@ -2,7 +2,7 @@
 import { User } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FaBars, FaTimes } from "react-icons/fa";
 
@@ -12,6 +12,7 @@ const Navbar = () => {
   const { data: session } = useSession()
   const user: User = session?.user as User
   const [active, setActive] = useState(location)
+  const router = useRouter()
 
 
   useEffect(() => {
@@ -21,13 +22,13 @@ const Navbar = () => {
 
 
   return (
-    <main className="flex items-center w-full h-20 px-4 text-white bg-black fixed nav">
+    <main className="flex items-center w-full h-20 px-4 text-zinc-100 bg-slate-900 fixed nav">
       <div className="container flex justify-between items-center">
         <div>
           {/* <h1 className="text-5xl font-signature ml-2"><a className="link-underline hover:transition ease-in-out delay-150 hover:underline hover:decoration-solid" href="">Logo</a></h1> */}
           <h1 className="text-xl md:text-2xl font-signature ml-2">
             <Link
-              className="link-underline link-underline-black"
+              className="font-bold link-underline link-underline-black"
               href="/"
             >
               VenueWorld
@@ -35,7 +36,7 @@ const Navbar = () => {
           </h1>
         </div>
 
-        <div className="hidden md:flex">
+        <div className="hidden md:flex font-semibold">
 
           <Link href={"/"} className={`nav-links px-4 cursor-pointer capitalize font-medium hover:scale-105  duration-200 link-underline ${active == "/" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
             Home
@@ -50,27 +51,29 @@ const Navbar = () => {
 
 
           <Link href={"/contact"} className={`nav-links px-4 cursor-pointer capitalize font-medium hover:scale-105  duration-200 link-underline ${active == "/contact" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>contact</Link>
+          <>
 
 
-          {
-            session ? (
-              <Link
-                key={5}
-                className="nav-links px-4 cursor-pointer capitalize font-medium hover:scale-105  duration-200 link-underline text-gray-500 hover:text-white"
-                onClick={() => signOut()}
-                href={"/login"}>
-                Logout
-              </Link>
-            ) : (
-              <Link
-                href={"/login"}
-                key={5}
-                className="nav-links px-4 cursor-pointer capitalize font-medium hover:scale-105  duration-200 link-underline text-gray-500 hover:text-white"
-              >
-                Login
-              </Link>
-            )
-          }
+            {
+              session ? (
+                <Link
+                  key={5}
+                  className="nav-links px-4 cursor-pointer capitalize font-medium hover:scale-105  duration-200 link-underline text-gray-500 hover:text-white"
+                  onClick={() => signOut()}
+                  href={"/login"}>
+                  Logout
+                </Link>
+              ) : (
+                <Link
+                  href={"/login"}
+                  key={5}
+                  className="nav-links px-4 cursor-pointer capitalize font-medium hover:scale-105  duration-200 link-underline text-gray-500 hover:text-white"
+                >
+                  Login
+                </Link>
+              )
+            }
+          </>
         </div>
 
         <div
@@ -81,29 +84,30 @@ const Navbar = () => {
         </div>
 
         {nav && (
-          <div className="flex flex-col justify-center items-center absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500">
+          <div className="flex flex-col text-xl justify-center gap-4 items-center absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500">
 
 
 
-            <Link href={"/"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize py-6 text-4xl ${active == "/" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>Home</Link>
+            <Link href={"/"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize ${active == "/" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>Home</Link>
 
-            <Link href={"/explore"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize py-6 text-4xl ${active == "/explore" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>explore</Link>
+            <Link href={"/explore"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize   ${active == "/explore" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>explore</Link>
 
-            <Link href={"/bookings"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize py-6 text-4xl ${active == "/bookings" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>bookings</Link>
+            <Link href={"/bookings"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize  ${active == "/bookings" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>bookings</Link>
 
-            <Link href={"/contact"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize py-6 text-4xl ${active == "/contact" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>contact</Link>
+            <Link href={"/contact"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize  ${active == "/contact" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>contact</Link>
 
-            {
-              session ? (
+            <>
+              {
+                session ? (
 
-                <Link onClick={() => { signOut(); setNav(!nav) }} href={"/login"} className="px-4 cursor-pointer capitalize py-6 text-4xl text-gray-500 hover:text-white">Logout</Link>
-              ) : (
+                  <span onClick={async() => { await signOut(); setNav(!nav)}} className="px-4 cursor-pointer capitalize text-gray-500 hover:text-white">Logout</span>
+                ) : (
 
-                <Link href={"/login"} onClick={() => setNav(!nav)} className="px-4 cursor-pointer capitalize py-6 text-4xl text-gray-500 hover:text-white">Login</Link>
+                  <Link href={"/login"} onClick={() => setNav(!nav)} className="px-4 cursor-pointer capitalize text-gray-500 hover:text-white">Login</Link>
 
-              )
-            }
-
+                )
+              }
+            </>
           </div>
         )}
       </div>

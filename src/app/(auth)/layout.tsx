@@ -5,9 +5,7 @@ import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
     children,
-}: Readonly<{
-    children: React.ReactNode;
-}>) {
+}: { children: React.ReactNode }) {
     const [isMounted, setIsMounted] = useState(false);
     useEffect(() => {
         setIsMounted(true);
@@ -17,10 +15,11 @@ export default function RootLayout({
         return null;
     }
     return (
-        <html lang="en">
-            <body>
-                {children}
-            </body>
-        </html>
+
+        <>
+            {children}
+            <Toaster />
+        </>
+
     );
 }

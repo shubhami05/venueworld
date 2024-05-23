@@ -8,6 +8,8 @@ export const config = {
         '/signup',
         '/login',
         '/',
+        '/contact',
+        '/explore/:path',
         '/bookings/:path*',
         // '/dashboard/:path*',
         // '/verify/:path*'
