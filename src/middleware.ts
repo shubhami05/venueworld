@@ -8,6 +8,7 @@ export const config = {
         '/signup',
         '/login',
         '/',
+        '/bookings/:path*',
         // '/dashboard/:path*',
         // '/verify/:path*'
     ],
@@ -22,16 +23,17 @@ export async function middleware(request: NextRequest) {
 
     if (
         token &&
-        (url.pathname.startsWith('/login') ||
-            url.pathname.startsWith('/signup') 
+        (
+            url.pathname.startsWith('/login') ||
+            url.pathname.startsWith('/signup')
         )
     ) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
-    // if (!token && url.pathname.startsWith('/bookings')) {
-    //     return NextResponse.redirect(new URL('/signup', request.url));
-    // }
+    if (!token && url.pathname.startsWith('/bookings')) {
+        return NextResponse.redirect(new URL('/login', request.url));
+    }
 
     return NextResponse.next();
 }

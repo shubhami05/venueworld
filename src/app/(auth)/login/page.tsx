@@ -13,13 +13,12 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { signupSchema } from "@/schemas/signupSchema"
 import { useState } from "react"
 import { motion } from 'framer-motion'
 import { AuroraBackground } from "@/components/ui/aurora-background"
 import Link from "next/link"
 import { Separator } from "@/components/ui/separator"
-import axios, { AxiosError } from 'axios'
+import  { AxiosError } from 'axios'
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import { ApiResponse } from "@/types/ApiResponse"
@@ -53,7 +52,7 @@ export default function SigninPage() {
         if (result.error === "Error: Invalid credentials!") {
           toast({
             title: "Login Failed",
-            description: "Incorrect username or password",
+            description: "Invalid user or password",
             duration: 5000,
             variant: "destructive"
           });
