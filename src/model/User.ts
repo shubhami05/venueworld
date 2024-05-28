@@ -10,7 +10,6 @@ export interface User extends Document {
     email: string
     mobile: string
     password: string
-    isVerified: boolean
     verifyCode: string
     verifyCodeExpiry: Date
     reviews: Review[]

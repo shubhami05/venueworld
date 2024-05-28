@@ -6,6 +6,7 @@ export interface Venue extends Document {
     type: string
     city: string
     address: string
+    pincode: string
     price: number
     ownerId: string
     ownerName: string
@@ -39,6 +40,10 @@ export const VenueSchema: Schema<Venue> = new Schema({
         required: true
     },
     address: {
+        type: String,
+        required: true
+    },
+    pincode: {
         type: String,
         required: true
     },

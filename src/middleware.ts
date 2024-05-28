@@ -1,3 +1,4 @@
+
 import { NextRequest, NextResponse } from 'next/server'
 export { default } from "next-auth/middleware"
 import { getToken } from 'next-auth/jwt'
@@ -11,8 +12,11 @@ export const config = {
         '/contact',
         '/explore/:path',
         '/bookings/:path*',
-        // '/dashboard/:path*',
-        // '/verify/:path*'
+        '/verify/:path*',
+        '/myvenues',
+        '/owner/:path*',
+        '/admin/:path*',
+
     ],
 }
 
@@ -33,8 +37,20 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(new URL('/', request.url));
     }
 
-    if (!token && url.pathname.startsWith('/bookings')) {
-        return NextResponse.redirect(new URL('/login', request.url));
+    if (!token) {
+        if (
+            url.pathname.startsWith('/bookings') ||
+            url.pathname.startsWith('/myvenues') ||
+            url.pathname.startsWith('/verify') 
+        ) {
+            return NextResponse.redirect(new URL('/login', request.url));
+        }
+    }
+    if (!token?.isAdmin && url.pathname.startsWith('/admin')) {
+        return NextResponse.redirect(new URL('/', request.url));
+    }
+    if (!token?.isOwner && url.pathname.startsWith('/owner')){
+        return NextResponse.redirect(new URL('/',request.url));
     }
 
     return NextResponse.next();
