@@ -84,4 +84,13 @@
   body {
     @apply bg-background text-foreground;
   }
+  body::-webkit-scrollbar {
+    display: none;
+  }
+  .hero_image{
+      /* aspect-ratio: "600/600";
+      object-fit: "cover"; */
+      
+  }
 }
+

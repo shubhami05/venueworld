@@ -27,21 +27,20 @@ export async function middleware(request: NextRequest) {
     const token = await getToken({ req: request })
     const url = request.nextUrl
 
-    if (
-        token &&
-        (
-            url.pathname.startsWith('/login') ||
-            url.pathname.startsWith('/signup')
-        )
-    ) {
+    if (token && (url.pathname.startsWith('/login') || url.pathname.startsWith('/signup'))) {
         return NextResponse.redirect(new URL('/', request.url));
+    }
+    if((token && token?.isOwner) && url.pathname.startsWith('/verify')){
+        return NextResponse.redirect(new URL("/owner/dashboard",request.url));
     }
 
     if (!token) {
         if (
             url.pathname.startsWith('/bookings') ||
             url.pathname.startsWith('/myvenues') ||
-            url.pathname.startsWith('/verify') 
+            url.pathname.startsWith('/verify') ||
+            url.pathname.startsWith('/admin') ||
+            url.pathname.startsWith('/owner')
         ) {
             return NextResponse.redirect(new URL('/login', request.url));
         }
@@ -49,8 +48,8 @@ export async function middleware(request: NextRequest) {
     if (!token?.isAdmin && url.pathname.startsWith('/admin')) {
         return NextResponse.redirect(new URL('/', request.url));
     }
-    if (!token?.isOwner && url.pathname.startsWith('/owner')){
-        return NextResponse.redirect(new URL('/',request.url));
+    if (!token?.isOwner && url.pathname.startsWith('/owner')) {
+        return NextResponse.redirect(new URL('/', request.url));
     }
 
     return NextResponse.next();

@@ -23,14 +23,14 @@ const Navbar = () => {
 
 
   return (
-    <main className="flex items-center w-full h-20 px-4 text-zinc-100 bg-slate-900 fixed nav">
+    <main className="flex z-10 items-center w-full h-20 px-4 text-zinc-900 bg-zinc-100 bg-opacity-50 bg-blur-md fixed nav">
       <div className="min-w-full md:container flex justify-between items-center">
         <div>
-          {/* <h1 className="text-5xl font-signature ml-2"><a className="link-underline hover:transition ease-in-out delay-150 hover:underline hover:decoration-solid" href="">Logo</a></h1> */}
+
           <h1 className="text-xl md:text-2xl font-signature ml-2">
             <Link
               className="font-bold link-underline link-underline-black"
-              href={user?.isAdmin ? ("/dashboard") : ("/")}
+              href={user?.isAdmin || user?.isOwner ? (user?.isAdmin ? ("/admin/dashboard") : ("/owner/dashboard")) : ("/")}
             >
               VenueWorld
             </Link>
@@ -38,36 +38,51 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex font-semibold">
-          <Link href={"/"} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${active == "/" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
+          <Link href={"/"} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${pathname.endsWith("/") ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
             Home
           </Link>
-          {
+          {/* {
             (user?.isAdmin || user?.isOwner) ?
               (
                 <>
-                  <Link href={user?.isAdmin ? ("/admin/dashboard") : ("/owner/dashboard")} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${active == "/dashboard" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
+                  <Link href={user?.isAdmin ? ("/admin/dashboard") : ("/owner/dashboard")} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${pathname.endsWith("/dashboard") ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
                     Dashboard
                   </Link>
 
                   {
                     user?.isOwner ? (
                       <>
-                        <Link href={`/owner/myvenues/${user?._id}`} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${active == `/owner/myvenues/${user?._id}` ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
+                        <Link
+                          href={`/owner/myvenues/${user?._id}`}
+                          className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline 
+                        ${pathname.startsWith(`/owner/myvenues`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
                           My Venues
                         </Link>
-                        <Link href={`/owner/bookings/${user?._id}`} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${active == `/owner/bookings/${user?._id}` ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
+                        <Link
+                          href={`/owner/bookings/${user?._id}`}
+                          className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline
+                        ${pathname.startsWith(`/owner/bookings`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
                           Bookings
                         </Link>
-                        <Link href={`/owner/reviews/${user?._id}`} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${active == `/owner/reviews/${user?._id}` ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
+                        <Link
+                          href={`/owner/reviews/${user?._id}`}
+                          className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline 
+                        ${pathname.startsWith(`/owner/reviews`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
                           Reviews
                         </Link>
                       </>
                     ) : (
                       <>
-                        <Link href={`/admin/user-list`} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${active == `/admin/user-list` ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
+                        <Link
+                          href={`/admin/user-list`}
+                          className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline 
+                        ${pathname.startsWith(`/admin/user-list`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
                           User List
                         </Link>
-                        <Link href={`/admin/venues`} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${active == `/admin/venues` ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
+                        <Link
+                          href={`/admin/venues`}
+                          className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline 
+                        ${pathname.startsWith(`/admin/venues`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
                           Venues
                         </Link>
                       </>
@@ -76,19 +91,25 @@ const Navbar = () => {
 
                 </>
 
-              ) : (
+              ) : ( */}
 
                 <>
-                  <Link href={"/explore"} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${pathname.startsWith('/explore') ? ("text-white") : ("text-gray-500 hover:text-white")}`}>
+                  <Link
+                    href={"/explore"}
+                    className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${pathname.startsWith('/explore') ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
                     explore
                   </Link>
 
-                  <Link href={`/bookings/${user?._id}`} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${pathname.startsWith("/bookings") ? ("text-white") : ("text-gray-500 hover:text-white")}`}>bookings</Link>
+                  <Link
+                    href={`/bookings/${user?._id}`}
+                    className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline ${pathname.startsWith("/bookings") ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>bookings</Link>
 
-                  <Link href={`/verify/${user?._id}`} className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline text-gray-500 hover:text-white`}>List your venue</Link>
+                  <Link
+                    href={`/verify/${user?._id}`}
+                    className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline text-gray-500 hover:text-zinc-900`}>List your venue</Link>
                 </>
-              )
-          }
+              {/* )
+          } */}
 
           <>
 
@@ -96,7 +117,7 @@ const Navbar = () => {
               session ? (
                 <Link
                   key={5}
-                  className="nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline text-gray-500 hover:text-white"
+                  className="nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline text-gray-500 hover:text-zinc-900"
                   onClick={() => signOut()}
                   href={"/login"}>
                   Logout
@@ -105,7 +126,7 @@ const Navbar = () => {
                 <Link
                   href={"/login"}
                   key={5}
-                  className="nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline text-gray-500 hover:text-white"
+                  className="nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline text-gray-500 hover:text-zinc-900"
                 >
                   Login
                 </Link>
@@ -122,26 +143,81 @@ const Navbar = () => {
         </div>
 
         {nav && (
-          <div className="font-bold flex flex-col text-xl justify-center gap-4 items-center absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-black to-gray-800 text-gray-500">
+
+          <div className="font-bold flex flex-col text-xl justify-center gap-4 items-center absolute top-0 left-0 w-full h-screen bg-gradient-to-b from-white to-zinc-300 text-gray-500">
+
+            {/* (user?.isAdmin || user?.isOwner) ?
+            (<>
+              <Link 
+              onClick={() => setNav(!nav)} 
+              href={user?.isAdmin ? ("/admin/dashboard") : ("/owner/dashboard")} 
+              className={`px-4 cursor-pointer capitalize ${pathname.endsWith("/dashboard") ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
+                Dashboard
+              </Link>
+              {
+                user?.isOwner ? (
+                  <>
+                    <Link
+                      href={`/owner/myvenues/${user?._id}`}
+                      className={`px-4 cursor-pointer capitalize
+                        ${pathname.startsWith(`/owner/myvenues`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`
+                      }>
+                      My Venues
+                    </Link>
+                    <Link
+                      href={`/owner/bookings/${user?._id}`}
+                      className={`px-4 cursor-pointer capitalize
+                        ${pathname.startsWith(`/owner/bookings`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`
+                      }>
+                      Bookings
+                    </Link>
+                    <Link
+                      href={`/owner/reviews/${user?._id}`}
+                      className={`px-4 cursor-pointer capitalize 
+                        ${pathname.startsWith(`/owner/reviews`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`
+                      }>
+                      Reviews
+                    </Link>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href={`/admin/user-list`}
+                      className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline 
+                  ${pathname.startsWith(`/admin/user-list`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
+                      User List
+                    </Link>
+                    <Link
+                      href={`/admin/venues`}
+                      className={`nav-links px-4 cursor-pointer capitalize hover:scale-105  duration-200 link-underline 
+                  ${pathname.startsWith(`/admin/venues`) ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>
+                      Venues
+                    </Link>
+                  </>
+                )
+              }
+            </>) : (
+
+            ) */}
 
 
 
-            <Link href={"/"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize ${active == "/" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>Home</Link>
+            <Link href={"/"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize ${pathname.startsWith("/") ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>Home</Link>
 
-            <Link href={"/explore"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize   ${active == "/explore" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>explore</Link>
+            <Link href={"/explore"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize   ${active == "/explore" ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>explore</Link>
 
-            <Link href={"/bookings"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize  ${active == "/bookings" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>bookings</Link>
+            <Link href={`/bookings/${user?._id}`} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize ${pathname.startsWith("/bookings") ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>bookings</Link>
 
-            <Link href={"/contact"} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize  ${active == "/contact" ? ("text-white") : ("text-gray-500 hover:text-white")}`}>contact</Link>
+            <Link href={`/verify/${user?._id}`} onClick={() => setNav(!nav)} className={`px-4 cursor-pointer capitalize  ${active == "/contact" ? ("text-zinc-900") : ("text-gray-500 hover:text-zinc-900")}`}>List Your Venue</Link>
 
             <>
               {
                 session ? (
 
-                  <span onClick={async () => { await signOut(); setNav(!nav) }} className="px-4 cursor-pointer capitalize text-gray-500 hover:text-white">Logout</span>
+                  <span onClick={async () => { await signOut(); setNav(!nav) }} className="px-4 cursor-pointer capitalize text-gray-500 hover:text-zinc-900">Logout</span>
                 ) : (
 
-                  <Link href={"/login"} onClick={() => setNav(!nav)} className="px-4 cursor-pointer capitalize text-gray-500 hover:text-white">Login</Link>
+                  <Link href={"/login"} onClick={() => setNav(!nav)} className="px-4 cursor-pointer capitalize text-gray-500 hover:text-zinc-900">Login</Link>
 
                 )
               }
