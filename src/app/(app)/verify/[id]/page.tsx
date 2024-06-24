@@ -27,7 +27,7 @@ const page = () => {
     const fetchUserDetails = async (id: any) => {
         try {
             setIsLoading(true);
-            const response = await axios.post("/api/getUserData",{id});
+            const response = await axios.post("/api/users/getUserData",{id});
             setUserData(response.data)
             console.log(response)
         } catch (error) {
