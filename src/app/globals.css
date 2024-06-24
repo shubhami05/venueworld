@@ -71,26 +71,55 @@
   * {
     @apply border-border;
   }
+
   input[type=number] {
     -moz-appearance: textfield;
   }
+
   input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
-      /* display: none; <- Crashes Chrome on hover */
-      -webkit-appearance: none;
-      margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0;
+    /* <-- Apparently some margin are still there even though it's hidden */
   }
-  
+
   body {
+    @apply relative z-10 bg-white text-base font-normal;
     @apply bg-background text-foreground;
   }
+
   body::-webkit-scrollbar {
     display: none;
   }
-  .hero_image{
-      /* aspect-ratio: "600/600";
+
+  .hero_image {
+    /* aspect-ratio: "600/600";
       object-fit: "cover"; */
-      
+
   }
 }
 
+
+
+@keyframes loop {
+  0% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(20px);
+  }
+
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+
+
+/* Global or component-specific CSS */
+#default-sidebar {
+  transition: transform 0.3s ease-in-out;
+  transform: -translate-x-full;
+}

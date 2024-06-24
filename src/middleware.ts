@@ -13,7 +13,6 @@ export const config = {
         '/explore/:path',
         '/bookings/:path*',
         '/verify/:path*',
-        '/myvenues',
         '/owner/:path*',
         '/admin/:path*',
 
@@ -28,23 +27,28 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl
 
     if (token && (url.pathname.startsWith('/login') || url.pathname.startsWith('/signup'))) {
+        if (token.isAdmin) {
+            return NextResponse.redirect(new URL('/admin/dashboard', request.url));
+        }
+        if (token.isOwner) {
+            return NextResponse.redirect(new URL('/owner/dashboard', request.url));
+        }
         return NextResponse.redirect(new URL('/', request.url));
     }
-    if((token && token?.isOwner) && url.pathname.startsWith('/verify')){
-        return NextResponse.redirect(new URL("/owner/dashboard",request.url));
+    if ((token && token?.isOwner) && !url.pathname.startsWith('/owner')) {
+        return NextResponse.redirect(new URL("/owner/dashboard", request.url));
     }
 
-    if (!token) {
-        if (
-            url.pathname.startsWith('/bookings') ||
-            url.pathname.startsWith('/myvenues') ||
-            url.pathname.startsWith('/verify') ||
-            url.pathname.startsWith('/admin') ||
-            url.pathname.startsWith('/owner')
-        ) {
-            return NextResponse.redirect(new URL('/login', request.url));
-        }
+    if (!token && (
+        url.pathname.startsWith('/bookings') ||
+        url.pathname.startsWith('/verify') ||
+        url.pathname.startsWith('/explore') ||
+        url.pathname.startsWith('/admin') ||
+        url.pathname.startsWith('/owner')
+    )) {
+        return NextResponse.redirect(new URL('/login', request.url));
     }
+
     if (!token?.isAdmin && url.pathname.startsWith('/admin')) {
         return NextResponse.redirect(new URL('/', request.url));
     }
