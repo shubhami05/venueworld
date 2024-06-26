@@ -11,7 +11,7 @@ const page = () => {
     const navigate = useRouter();
     const params = useParams();
     const [userData,setUserData] = useState<User>()
-    if (!params.id) { 
+    if (params.id===undefined) { 
         navigate.replace('/') 
         toast({
             title: "Something went wrong !",
@@ -28,7 +28,7 @@ const page = () => {
         try {
             setIsLoading(true);
             const response = await axios.post("/api/users/getUserData",{id});
-            setUserData(response.data)
+            setUserData(response.data.userData)
             console.log(response)
         } catch (error) {
             console.log(error)
@@ -46,7 +46,7 @@ const page = () => {
                     </div>
                 ):(
                     <div>
-                    Hello {params.id}, {userData?.email}
+                    Hello {params.id}, {userData?.firstname} {userData?.lastname}
                     </div>
                 )
             }

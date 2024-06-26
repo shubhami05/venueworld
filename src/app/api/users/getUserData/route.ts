@@ -24,7 +24,7 @@ export async function POST(request: NextRequest) {
             {
                 success: true,
                 message: 'User founded successfully',
-                data: userExist
+                userData: userExist
             },
             {
                 status: 200

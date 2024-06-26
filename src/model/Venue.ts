@@ -11,7 +11,8 @@ export interface Venue extends Document {
     ownerId: string
     ownerName: string
     ownerContact: string
-    events: []
+    locationLink: string
+    eventsList: []
     facilities: {
         parking: boolean
         food: boolean
@@ -64,7 +65,11 @@ export const VenueSchema: Schema<Venue> = new Schema({
         type: String,
         required: true
     },
-    events: {
+    locationLink: {
+        type: String,
+        required: true
+    },
+    eventsList: {
         type: [],
         required: true
     },
