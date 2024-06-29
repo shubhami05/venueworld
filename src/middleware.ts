@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
         }
         return NextResponse.redirect(new URL('/', request.url));
     }
-    if ((token && token?.isOwner) && !url.pathname.startsWith('/owner')) {
+    if ((token && token?.isOwner) && (!url.pathname.startsWith('/owner') || url.pathname === "/")) {
         return NextResponse.redirect(new URL("/owner/dashboard", request.url));
     }
 
